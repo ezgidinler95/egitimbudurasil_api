@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
+const bcrypt = require('bcryptjs');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
