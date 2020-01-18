@@ -58,3 +58,17 @@ module.exports.allUsers = () => {
         return { error };
     }
 }
+
+module.exports.getUser = () => {
+    try {
+        return Users.findOne({ email: email })
+            .then((users) => {
+                return { users };
+            })
+            .catch((error) => {
+                return { error };
+            });
+    } catch (error) {
+        return { error };
+    }
+}

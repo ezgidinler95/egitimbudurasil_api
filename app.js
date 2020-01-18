@@ -6,10 +6,6 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 const bcrypt = require('bcryptjs');
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 const app = express();
 
 mongoose.connect('mongodb://localhost/egitim', { useMongoClient: true });
@@ -30,8 +26,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+const userRouter = require('./routes/user');
+app.use('/user', userRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

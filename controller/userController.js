@@ -19,13 +19,29 @@ exports.addUser = async (req, res) => {
 }
 
 exports.allUsers = async (req, res) => {
-
     const { users, error } = await Users.allUsers(req.body);
     if (!error) {
         res.json({
             code: 200,
             data: {
                 users
+            }
+        });
+    } else {
+        res.json({
+            code: 422,
+            message: error.message
+        });
+    }
+}
+
+exports.getUser = async (req, res) => {
+    const { user, error } = await Users.getUser(req.body);
+    if (!error) {
+        res.json({
+            code: 200,
+            data: {
+                user
             }
         });
     } else {
