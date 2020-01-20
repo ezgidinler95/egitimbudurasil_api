@@ -5,10 +5,17 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
+const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const app = express();
 
-mongoose.connect('mongodb://localhost/egitim', { useMongoClient: true });
+
+// cors secenekleri
+const corsOptions = {
+  exposedHeaders: ['Content-Length', 'Developer-By', 'X-Powered-By', "File-Name"],
+};
+
+mongoose.connect('mongodb://localhost/egitim', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('open', () => {
   console.log("bağlantı saglandı.");
 });
@@ -19,7 +26,7 @@ mongoose.connection.on('error', (err) => {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

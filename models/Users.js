@@ -59,11 +59,11 @@ module.exports.allUsers = () => {
     }
 }
 
-module.exports.getUser = () => {
+module.exports.getLogin = async (params) => {
     try {
-        return Users.findOne({ email: email })
-            .then((users) => {
-                return { users };
+        return Users.findOne({ email: params.email })
+            .then((user) => {
+                return { user };
             })
             .catch((error) => {
                 return { error };
