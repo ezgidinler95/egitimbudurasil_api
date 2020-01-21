@@ -1,8 +1,10 @@
 const Users = require("../models/Users");
 const jwt = require("jsonwebtoken");
+const md5 = require('md5');
 
 
 exports.addUser = async (req, res) => {
+    req.body.password = md5(req.body.password);
     const { user, error } = await Users.addUser(req.body);
     if (!error) {
         res.json({
@@ -29,12 +31,20 @@ exports.login = async (req, res) => {
     const { user, error } = await Users.getLogin(req.body);
     if (!error) {
         if (user) {
-            if (user.password === req.body.password) {
-                //  const token = jwt.sing()
+            if (user.password === md5(req.body.password)) {
+                const payload = {
+                    name: user.name
+                };
+                const token = jwt.sign(payload, req.app.get('api_secret_key'),
+                    {
+                        expiresIn: 720 // 12 saat
+                    });
+                console.log("token", token)
                 res.json({
                     code: 200,
                     data: {
-                        user
+                        user,
+                        token
                     }
                 });
             } else {
@@ -70,3 +80,5 @@ exports.allUsers = async (req, res) => {
         });
     }
 }
+
+

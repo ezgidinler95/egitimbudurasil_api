@@ -1,9 +1,3 @@
-export default {
-    version: "v1",
-    jwtSecret: 'ezgiuygulama'
+module.exports = {
+    api_secret_key: 'benim uygulamam cok gizli'
 }
-
-// exports.deneme = {
-//     version: "v1",
-//     jwtSecret: 'ezgiuygulama'
-// };

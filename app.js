@@ -6,7 +6,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 const cors = require('cors');
-const bcrypt = require('bcryptjs');
+var md5 = require('md5');
+
 const app = express();
 
 
@@ -14,6 +15,11 @@ const app = express();
 const corsOptions = {
   exposedHeaders: ['Content-Length', 'Developer-By', 'X-Powered-By', "File-Name"],
 };
+
+const config = require('./config/config');
+app.set('api_secret_key', config.api_secret_key);
+//middleware
+const verifyToken = require('./middleware/verify-token');
 
 mongoose.connect('mongodb://localhost/egitim', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('open', () => {
@@ -28,6 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(cors(corsOptions));
 app.use(logger('dev'));
+// app.use('/api', verifyToken);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
