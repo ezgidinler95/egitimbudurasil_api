@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     if (!error) {
         if (user) {
             if (user.password === req.body.password) {
-                const token = jwt.sing()
+                //  const token = jwt.sing()
                 res.json({
                     code: 200,
                     data: {
